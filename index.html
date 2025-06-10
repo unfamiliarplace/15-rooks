@@ -9,21 +9,57 @@
 <body>
 <!-- partial:index.partial.html -->
 <div id='app' class="flexCol">
-<!--    <div id="mainPanel">-->
+    <div id="mainPanel">
         <div id='gridPanel' class='flexRow'></div>
-        <div id='helpPanel' class='flexCol hide'>
-            Help
+        <div id='helpPanel' class='flexRow hide'>
+            <div id="helpWrap" class="flexCol">
+                <h1>15 Rooks</h1>
+                <p>The 15 rooks logic puzzle runs as follows:</p>
+                <p>
+                    If you place 15 rooks anywhere on a regular 8x8 chessboard,
+                    ensuring that every rank and every file is covered
+                    by at least one rook, then there will always be
+                    at least one rook you can remove without uncovering
+                    any rank or file. That is, at least one rook is
+                    guaranteed to be redundant, regardless of placement.
+                    This little tool is designed to visually explore
+                    the puzzle.
+                </p>
+                <p>
+                    You can click on a square to toggle it,
+                    or click and hold to toggle many tiles at once.
+                    The counter below the board tells you how many
+                    rooks you have used, and the "highlight redundant rooks"
+                    button highlights redundant rooks if there are any.
+                    A rook is defined as redundant if removing it
+                    leaves the same number of ranks and files covered.
+                </p>
+                <hr>
+                <p>
+                    I first came across the puzzle
+                    <a href="https://puzzling.stackexchange.com/questions/131804" title="Puzzling SE">here on Puzzling
+                        SE</a>.
+                </p>
+                <p id="copyrightLine">
+                    © 2025 <a href="https://sawczak.com" title="Luke Sawczak's website">Luke Sawczak</a>
+                </p>
+            </div>
         </div>
-<!--    </div>-->
+    </div>
     <div id='controlPanel' class='flexRow'>
-        <div id='buttonsBlock'>
-            <button id='btnReset'>Reset</button>
+        <div id='buttonsBlock' class="flexRow">
+            <div class="option">
+                <label for="highlightRedundant" id="highlightRedundantLabel" class="flexRow"><span
+                        class="optionLabel">Highlight redundant</span>
+                    <input type="checkbox" id="highlightRedundant" class="inputInLabel">
+                </label>
+            </div>
             <button id='btnHelp'>Help</button>
-            <button id='btnGame' class="hide">Game</button>
-        </div>
-        <div id='nRooksBlock' class='flex flexRow'>
-            <label for='nRooks'>Rooks:</label>
-            <div id='nRooks'>0</div>
+            <button id='btnReset'>Reset</button>
+            <div id='nRooksBlock' class='flexRow'>
+                <label for='nRooks' class="flexCol">Rooks:</label>
+                <div id='nRooks' class="flexCol">0</div>
+            </div>
         </div>
     </div>
 

@@ -48,6 +48,31 @@ body {
   align-content: flex-start;
 }
 
+#helpPanel {
+  padding: 50px;
+  border: 1px solid #fff;
+}
+
+#helpWrap {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  gap: 25px;
+}
+
+#helpWrap a {
+  color: #fff;
+}
+
+#copyrightLine {
+  font-size: 1.5rem;
+}
+
+hr {
+  color: #fff;
+}
+
 #controlPanel {
   padding: 20px;
   margin-top: 20px;
@@ -63,6 +88,7 @@ body {
   top: 0;
   left: 0;
   /*transition-duration: 0.05s;*/
+  cursor: pointer;
 }
 
 .gridCellChecked {
@@ -81,23 +107,65 @@ body {
 }
 
 #nRooksBlock {
-  font-size: 30px;
-  position: relative;
-  top: 5px;
-  color: white;
+  font-size: 1.5rem;
+  color: #fff;
 }
 
 #nRooksBlock label {
   margin-right: 5px;
 }
 
-button {
-  font-size: 25px;
-  padding: 5px 10px;
-  font-family: 'Courier New', monospace;
-}
-
 .hide {
   display: none;
   visibility: hidden;
+}
+
+/* options */
+
+#buttonsBlock {
+  gap: 10px;
+}
+
+button {
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  font-family: 'Courier New', monospace;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+button:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.75);
+  color: #000;
+}
+
+button:active {
+  cursor: pointer;
+  background: rgba(255, 255, 255, .9);
+  color: #000;
+}
+
+.option label {
+  gap: 10px;
+  border: 1px solid #fff;
+  padding: 5px 10px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.option label:has(input:checked), .optionValidated {
+  background: rgba(255, 255, 255, 0.75);
+  color: #000;
+}
+
+.option label:has(input:not(:disabled)), input[type="checkbox"]:not(:disabled) {
+  cursor: pointer;
+}
+
+.option label:has(input:disabled) {
+  background-color:rgba(225, 225, 225, .75);
+  border-color: #777 !important;
+  color: #555;
 }

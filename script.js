@@ -46,7 +46,7 @@ function createGrid() {
 
         for (let j = 0; j < nCols; j++) {
             row.push(false);
-            cell = `<button class='gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></button>`;
+            cell = `<div class='gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></div>`;
             $("#gridPanel").append(cell);
         }
 
@@ -115,26 +115,6 @@ function drawCellStates() {
     }
 }
 
-function handleCellClick(el) {
-    let row = parseInt(el.attr('data-row'));
-    let col = parseInt(el.attr('data-col'));
-
-    // if (mousePressed === 0) {
-    //     activateCell(row, col);
-    //
-    // } else if ((mousePressed === 2) || (mousePressed === 1)) {
-    //     // different accounting on different OSes
-    //     deactivateCell(row, col);
-    // }
-
-    // if (! cellsTouched[row][col]) {
-    //     cellsTouched[row][col] = true;
-        toggleCell(row, col);
-    // }
-
-    draw();
-}
-
 function resetCellsTouched() {
     cellsTouched.length = 0;
     let row_;
@@ -147,18 +127,33 @@ function resetCellsTouched() {
     }
 }
 
+function handleCellClick(el) {
+    let row = parseInt(el.attr('data-row'));
+    let col = parseInt(el.attr('data-col'));
+
+    if (! cellsTouched[row][col]) {
+        cellsTouched[row][col] = true;
+        toggleCell(row, col);
+        draw();
+
+        setTimeout(() => {
+            cellsTouched[row][col] = false;
+        }, 15);
+    }
+}
+
 function handleMouseDown(e) {
-    mousePressed = e.button;
-    resetCellsTouched();
+    mousePressed = true;
 }
 
 function handleMouseUp(e) {
-    mousePressed = null;
+    mousePressed = false;
+    resetCellsTouched();
 }
 
 function bindCells() {
     $(".gridCell").mouseenter((e) => {
-        if (mousePressed !== null) {
+        if (mousePressed) {
             handleCellClick($(e.target));
         }
     });
@@ -180,30 +175,28 @@ function reset() {
     draw();
 }
 
-function showHelp() {
-    $('#gridPanel').addClass('hide');
-    $('#btnHelp').addClass('hide');
-    $('#helpPanel').removeClass('hide');
-    $('#btnGame').removeClass('hide');
-}
+function toggleHelp() {
+    showingHelp = !showingHelp;
+    if (showingHelp) {
+        $('#gridPanel').addClass('hide');
+        $('#helpPanel').removeClass('hide');
+        $('#btnHelp').text('Game');
 
-function showGame() {
-    $('#gridPanel').removeClass('hide');
-    $('#btnHelp').removeClass('hide');
-    $('#helpPanel').addClass('hide');
-    $('#btnGame').addClass('hide');
+    } else {
+        $('#gridPanel').removeClass('hide');
+        $('#helpPanel').addClass('hide');
+        $('#btnHelp').text('Help');
+    }
 }
 
 function bind() {
     bindCells();
-    // $(document).contextmenu(() => { return false; });
 
     $(document).mousedown(handleMouseDown);
     $(document).mouseup(handleMouseUp);
 
     $('#btnReset').click(reset);
-    $('#btnHelp').click(showHelp);
-    $('#btnGame').click(showGame);
+    $('#btnHelp').click(toggleHelp);
 
     resizeObserver.observe(document.getElementById('app'));
 }
@@ -211,6 +204,8 @@ function bind() {
 const resizeObserver = new ResizeObserver(() => {
     setCellSizes();
 });
+
+var showingHelp = false;
 
 $(document).ready((e) => {
     setup();
