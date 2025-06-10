@@ -1,0 +1,106 @@
+body {
+  background: #111;
+}
+
+#app {
+  padding: 10px;
+  background: #4ab;
+  border-radius: 20px;
+  min-height: 400px;
+  /* font-family: 'Courier New', monospace; */
+  font-family: 'Garamond', 'Times New Roman', serif;
+}
+
+#header {
+  font-size: 25px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.flexRow {
+  flex-direction: row;
+}
+
+.flexCol {
+  flex-direction: column;
+}
+
+.flexWrap {
+  flex-wrap: wrap;
+}
+
+.section {
+  background: rgba(1, 1, 1, 0.3);
+  padding: 10px;
+  border-radius: 15px;
+  margin: 15px 0px;
+}
+
+.sectionHeading {
+  text-align: center;
+  font-size: 22px;
+  color: white;
+}
+
+.gridCell {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #111;
+  background: #eee;
+  margin: 10px;
+  border-radius: 15px;
+  position: relative;
+  top: 0;
+  left: 0;
+  transition-duration: 0.25s;
+}
+
+.gridCellChecked {
+  background: #111;
+  border: 1px solid #eee;
+}
+
+.gridCell:hover {
+  box-shadow: 2px 2px #444;
+  top: -2px;
+  left: -2px;
+}
+
+#controlPanel {
+  padding: 20px;
+  margin-top: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+#controlPanel > div {
+  margin: 0px 15px;
+}
+
+#clicksBlock {
+  font-size: 30px;
+  position: relative;
+  top: 5px;
+}
+
+#clicksBlock label {
+  margin-right: 5px;
+}
+
+label[for='optAdvanced'] {  
+  font-family: 'Courier New', monospace;
+  height: 25px;
+  padding-top: 10px;
+  border-radius: 5px;
+  top: -3px;
+  background: #eee;
+}
+
+button {
+  font-size: 25px;
+  padding: 5px 10px;
+  font-family: 'Courier New', monospace;
+}
