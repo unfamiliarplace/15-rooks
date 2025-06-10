@@ -4,31 +4,31 @@ const initialCells = [];
 
 const clClickedState = "gridCellChecked";
 
-var mousePressed = false;
+var mousePressed = null;
 var cellStates = [];
 var cellsTouched = [];
 
 function createGrid() {
-    $("#gridPanel").html("");
+    $("#gridPanel").empty();
     let rows = "";
     let cols = "";
     let row;
 
     for (let i = 0; i < nRows; i++) {
         row = [];
+        cols = "";
+
         for (let j = 0; j < nCols; j++) {
             row.push(false);
-            cols += `<button class='flex flexCol gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></button>`;
+            cols += `<button class='flexCol gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></button>`;
         }
-        rows += `<div class='flex flexRow gridRow' id='row-${i}' data-row="${i}">${cols}</div>`;
-        cols = "";
+        rows += `<div class='flexRow gridRow' id='row-${i}' data-row="${i}">${cols}</div>`;
+
         cellStates.push(row);
     }
 
+    $("#gridPanel").append(rows);
     resetCellsTouched();
-
-    let inner = `<div class='flex flexCol'>${rows}</div>`;
-    $("#gridPanel").html(inner);
 }
 
 function clearCells() {
@@ -54,9 +54,7 @@ function deactivateCell(row, col) {
 }
 
 function toggleCell(row, col) {
-    console.log('tc1', row, col, cellStates[row][col]);
     cellStates[row][col] = ! cellStates[row][col];
-    console.log('tc2', row, col, cellStates[row][col]);
 }
 
 function countNRooks() {
@@ -95,7 +93,14 @@ function handleCellClick(el) {
     let row = parseInt(el.attr('data-row'));
     let col = parseInt(el.attr('data-col'));
 
-    console.log('hc', row, col, cellsTouched[row][col]);
+    // if (mousePressed === 0) {
+    //     activateCell(row, col);
+    //
+    // } else if ((mousePressed === 2) || (mousePressed === 1)) {
+    //     // different accounting on different OSes
+    //     deactivateCell(row, col);
+    // }
+
     if (! cellsTouched[row][col]) {
         cellsTouched[row][col] = true;
         toggleCell(row, col);
@@ -116,18 +121,19 @@ function resetCellsTouched() {
     }
 }
 
-function handleMouseDown() {
-    mousePressed = true;
+function handleMouseDown(e) {
+    mousePressed = e.button;
+    console.log(mousePressed);
     resetCellsTouched();
 }
 
-function handleMouseUp() {
-    mousePressed = false;
+function handleMouseUp(e) {
+    mousePressed = null;
 }
 
 function bindCells() {
     $(".gridCell").mouseenter((e) => {
-        if (mousePressed) {
+        if (mousePressed !== null) {
             handleCellClick($(e.target));
         }
     });
@@ -149,11 +155,28 @@ function reset() {
     draw();
 }
 
+function showHelp() {
+    $('#gridPanel').addClass('hide');
+    $('#btnHelp').addClass('hide');
+    $('#helpPanel').removeClass('hide');
+    $('#btnGame').removeClass('hide');
+}
+
+function showGame() {
+    $('#gridPanel').removeClass('hide');
+    $('#btnHelp').removeClass('hide');
+    $('#helpPanel').addClass('hide');
+    $('#btnGame').addClass('hide');
+}
+
 function bind() {
     bindCells();
+    // $(document).contextmenu(() => { return false; });
     $(document).mousedown(handleMouseDown);
     $(document).mouseup(handleMouseUp);
-    $('#reset').click(reset);
+    $('#btnReset').click(reset);
+    $('#btnHelp').click(showHelp);
+    $('#btnGame').click(showGame);
 }
 
 $(document).ready((e) => {

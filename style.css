@@ -1,13 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: #111;
+  background: #4ab;
 }
 
 #app {
   padding: 10px;
-  background: #4ab;
-  border-radius: 20px;
-  min-height: 400px;
-  /* font-family: 'Courier New', monospace; */
+  width: 100vw;
+  height: 100vh;
   font-family: 'Garamond', 'Times New Roman', serif;
 }
 
@@ -15,48 +19,54 @@ body {
   font-size: 25px;
 }
 
-.flex {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
-
 .flexRow {
+  display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .flexCol {
+  display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .flexWrap {
   flex-wrap: wrap;
 }
 
-.section {
-  background: rgba(1, 1, 1, 0.3);
-  padding: 10px;
-  border-radius: 15px;
-  margin: 15px 0px;
+#gridPanel, #helpPanel {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  /*gap: 1%;*/
+  gap: 15px;
 }
 
-.sectionHeading {
-  text-align: center;
-  font-size: 22px;
-  color: white;
+#controlPanel {
+  padding: 20px;
+  margin-top: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.gridRow {
+  /*gap: 1%;*/
+  /*height: 11%;*/
+  gap: 15px;
 }
 
 .gridCell {
-  height: 100px;
-  width: 100px;
+  /*height: 100%;*/
+  /*width: 11%;*/
+  width: 90px;
+  height: 90px;
   border: 1px solid #111;
   background: #eee;
-  margin: 10px;
   border-radius: 15px;
   position: relative;
   top: 0;
   left: 0;
-  transition-duration: 0.25s;
+  transition-duration: 0.05s;
 }
 
 .gridCellChecked {
@@ -70,37 +80,28 @@ body {
   left: -2px;
 }
 
-#controlPanel {
-  padding: 20px;
-  margin-top: 20px;
-  font-family: 'Courier New', monospace;
-}
-
 #controlPanel > div {
-  margin: 0px 15px;
+  margin: 0 15px;
 }
 
-#clicksBlock {
+#nRooksBlock {
   font-size: 30px;
   position: relative;
   top: 5px;
+  color: white;
 }
 
-#clicksBlock label {
+#nRooksBlock label {
   margin-right: 5px;
-}
-
-label[for='optAdvanced'] {  
-  font-family: 'Courier New', monospace;
-  height: 25px;
-  padding-top: 10px;
-  border-radius: 5px;
-  top: -3px;
-  background: #eee;
 }
 
 button {
   font-size: 25px;
   padding: 5px 10px;
   font-family: 'Courier New', monospace;
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
 }
