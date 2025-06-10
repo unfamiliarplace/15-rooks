@@ -8,26 +8,35 @@ var mousePressed = null;
 var cellStates = [];
 var cellsTouched = [];
 
+function setCellSizes() {
+    let wPanel = $('#gridPanel').width();
+    let nEquivalentCells = nCols * 1.2;
+    let cellSize = (1 / nEquivalentCells) * wPanel;
+    let gapSize = 0.2 * cellSize;
+
+    $('.gridCell').css('width', cellSize);
+    $('.gridCell').css('height', cellSize);
+    $('#gridPanel').css('gap', gapSize);
+}
+
 function createGrid() {
     $("#gridPanel").empty();
-    let rows = "";
-    let cols = "";
-    let row;
 
+    let row, cell;
     for (let i = 0; i < nRows; i++) {
         row = [];
-        cols = "";
+        cell = "";
 
         for (let j = 0; j < nCols; j++) {
             row.push(false);
-            cols += `<button class='flexCol gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></button>`;
+            cell = `<button class='gridCell' id='cell-${i}-${j}' data-row="${i}" data-col="${j}"></button>`;
+            $("#gridPanel").append(cell);
         }
-        rows += `<div class='flexRow gridRow' id='row-${i}' data-row="${i}">${cols}</div>`;
 
         cellStates.push(row);
     }
 
-    $("#gridPanel").append(rows);
+    setCellSizes();
     resetCellsTouched();
 }
 

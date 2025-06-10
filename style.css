@@ -9,7 +9,7 @@ body {
 }
 
 #app {
-  padding: 10px;
+  padding: 25px;
   width: 100vw;
   height: 100vh;
   font-family: 'Garamond', 'Times New Roman', serif;
@@ -39,8 +39,7 @@ body {
   width: 90%;
   height: 90%;
   margin: auto;
-  /*gap: 1%;*/
-  gap: 15px;
+  flex-wrap: wrap;
 }
 
 #controlPanel {
@@ -49,17 +48,7 @@ body {
   font-family: 'Courier New', monospace;
 }
 
-.gridRow {
-  /*gap: 1%;*/
-  /*height: 11%;*/
-  gap: 15px;
-}
-
 .gridCell {
-  /*height: 100%;*/
-  /*width: 11%;*/
-  width: 90px;
-  height: 90px;
   border: 1px solid #111;
   background: #eee;
   border-radius: 15px;
