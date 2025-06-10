@@ -127,10 +127,10 @@ function handleCellClick(el) {
     //     deactivateCell(row, col);
     // }
 
-    if (! cellsTouched[row][col]) {
-        cellsTouched[row][col] = true;
+    // if (! cellsTouched[row][col]) {
+    //     cellsTouched[row][col] = true;
         toggleCell(row, col);
-    }
+    // }
 
     draw();
 }
