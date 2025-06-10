@@ -9,14 +9,31 @@ var cellStates = [];
 var cellsTouched = [];
 
 function setCellSizes() {
-    let wPanel = $('#gridPanel').width();
-    let nEquivalentCells = nCols * 1.2;
-    let cellSize = (1 / nEquivalentCells) * wPanel;
-    let gapSize = 0.2 * cellSize;
+    // let mp = $('#mainPanel');
+    let gp = $('#gridPanel');
+    let gcs = $('.gridCell');
 
-    $('.gridCell').css('width', cellSize);
-    $('.gridCell').css('height', cellSize);
-    $('#gridPanel').css('gap', gapSize);
+    gp.css('width', `90%`);
+    gp.css('height', `90%`);
+
+    // let wPanel = 0.9 * mp.width();
+    // let hPanel = 0.9 * mp.height();
+    let wPanel = gp.width();
+    let hPanel = gp.height();
+
+    let smaller = Math.min(wPanel, hPanel);
+    gp.css('width', `${smaller}px`);
+    gp.css('height', `${smaller}px`);
+
+    let nEquivalentCells = nCols * 1.2;
+    let cellSize = (1 / nEquivalentCells) * smaller;
+    let gapSize = 0.2 * cellSize;
+    let borderRadius = 0.1 * cellSize;
+
+    gcs.css('width', cellSize);
+    gcs.css('height', cellSize);
+    gcs.css('border-radius', borderRadius);
+    gp.css('gap', gapSize);
 }
 
 function createGrid() {
@@ -132,7 +149,6 @@ function resetCellsTouched() {
 
 function handleMouseDown(e) {
     mousePressed = e.button;
-    console.log(mousePressed);
     resetCellsTouched();
 }
 
@@ -181,12 +197,20 @@ function showGame() {
 function bind() {
     bindCells();
     // $(document).contextmenu(() => { return false; });
+
     $(document).mousedown(handleMouseDown);
     $(document).mouseup(handleMouseUp);
+
     $('#btnReset').click(reset);
     $('#btnHelp').click(showHelp);
     $('#btnGame').click(showGame);
+
+    resizeObserver.observe(document.getElementById('app'));
 }
+
+const resizeObserver = new ResizeObserver(() => {
+    setCellSizes();
+});
 
 $(document).ready((e) => {
     setup();
