@@ -96,6 +96,10 @@ hr {
   border: 1px solid #eee;
 }
 
+.gridCellRedundant {
+  background: rgba(20, 100, 200);
+}
+
 .gridCell:hover {
   box-shadow: 2px 2px #444;
   top: -2px;

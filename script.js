@@ -3,10 +3,12 @@ const nRows = 8;
 const initialCells = [];
 
 const clClickedState = "gridCellChecked";
+const clRedundantState = "gridCellRedundant";
 
 var mousePressed = null;
 var cellStates = [];
 var cellsTouched = [];
+var redundantRooks = [];
 
 function setCellSizes() {
     // let mp = $('#mainPanel');
@@ -55,14 +57,13 @@ function createGrid() {
 
     setCellSizes();
     resetCellsTouched();
+    resetRedundantRooks();
 }
 
 function clearCells() {
-    for (let row = 0; row < nRows; row++) {
-        for (let col = 0; col < nCols; col++) {
-            cellStates[row][col] = false;
-        }
-    }
+    cellStates = copyCellStates(false);
+    redundantRooks = copyCellStates(false);
+    cellsTouched = copyCellStates(false);
 }
 
 function activateInitialCells() {
@@ -81,6 +82,33 @@ function deactivateCell(row, col) {
 
 function toggleCell(row, col) {
     cellStates[row][col] = ! cellStates[row][col];
+    updateRedundantRooks();
+}
+
+function updateRedundantRooks() {
+    resetRedundantRooks();
+
+    let rowCounts = new Array(nRows).fill(0);
+    let colCounts =new Array(nCols).fill(0);
+
+    for (let row = 0; row < nRows; row++) {
+        for (let col = 0; col < nCols; col++) {
+            if (cellStates[row][col]) {
+                rowCounts[row] += 1;
+                colCounts[col] += 1;
+            }
+        }
+    }
+
+    for (let row = 0; row < nRows; row++) {
+        for (let col = 0; col < nCols; col++) {
+            if (cellStates[row][col]) {
+                if ((rowCounts[row] > 1) && (colCounts[col] > 1)) {
+                    redundantRooks[row][col] = true;
+                }
+            }
+        }
+    }
 }
 
 function countNRooks() {
@@ -103,28 +131,49 @@ function draw() {
 }
 
 function drawCellStates() {
+    let checkRedundant = $('#highlightRedundant').is(':checked');
+
     let cell;
     for (let row = 0; row < nRows; row++) {
         for (let col = 0; col < nCols; col++) {
             cell = $(`#cell-${row}-${col}`);
             cell.removeClass(clClickedState);
+            cell.removeClass(clRedundantState);
+
             if (cellStates[row][col]) {
                 cell.addClass(clClickedState);
+            }
+            if (checkRedundant && redundantRooks[row][col]) {
+                cell.addClass(clRedundantState);
             }
         }
     }
 }
 
-function resetCellsTouched() {
-    cellsTouched.length = 0;
-    let row_;
-    for (let row = 0; row < nRows; row++) {
-        row_ = [];
-        for (let col = 0; col < nCols; col++) {
-            row_.push(false);
-        }
-        cellsTouched.push(row_);
+function copyCellStates(defaultValue) {
+    if (typeof defaultValue === undefined) {
+        defaultValue = false;
     }
+
+    let arr = [];
+    let row;
+    for (let i_row = 0; i_row < nRows; i_row++) {
+        row = [];
+        for (let i_col = 0; i_col < nCols; i_col++) {
+            row.push(defaultValue);
+        }
+        arr.push(row);
+    }
+
+    return arr;
+}
+
+function resetRedundantRooks() {
+    redundantRooks = copyCellStates(false);
+}
+
+function resetCellsTouched() {
+    cellsTouched = copyCellStates(false);
 }
 
 function handleCellClick(el) {
@@ -195,8 +244,9 @@ function bind() {
     $(document).mousedown(handleMouseDown);
     $(document).mouseup(handleMouseUp);
 
-    $('#btnReset').click(reset);
+    $('#highlightRedundant').change(drawCellStates);
     $('#btnHelp').click(toggleHelp);
+    $('#btnReset').click(reset);
 
     resizeObserver.observe(document.getElementById('app'));
 }
