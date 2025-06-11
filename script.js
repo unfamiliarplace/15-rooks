@@ -1,11 +1,14 @@
 const nCols = 8;
 const nRows = 8;
 const initialCells = [];
+const retoggleDelay = 25;
 
 const clClickedState = "gridCellChecked";
 const clRedundantState = "gridCellRedundant";
 
-var mousePressed = null;
+var mousePressed = false;
+var showingHelp = false;
+
 var cellStates = [];
 var cellsTouched = [];
 var redundantRooks = [];
@@ -187,7 +190,7 @@ function handleCellClick(el) {
 
         setTimeout(() => {
             cellsTouched[row][col] = false;
-        }, 15);
+        }, retoggleDelay);
     }
 }
 
@@ -254,8 +257,6 @@ function bind() {
 const resizeObserver = new ResizeObserver(() => {
     setCellSizes();
 });
-
-var showingHelp = false;
 
 $(document).ready((e) => {
     setup();
